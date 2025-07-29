@@ -64,6 +64,15 @@
 #define UNIX_SPECIFIC_ARG(x)
 #endif
 
+static void BEL_Cross_GetCurrentDir(TCHAR *currentDir, size_t currentDirSize)
+{
+    if (getcwd(currentDir, currentDirSize) == NULL)
+    {
+        perror("getcwd() error");
+        currentDir[0] = '\0'; // Ensure it's null-terminated on failure
+    }
+}
+
 static void BEL_Cross_TryAddInst_Common(
 	TCHAR (*path)[BE_CROSS_PATH_LEN_BOUND], const BE_GameVerDetails_T **gameVers,
 	const TCHAR **gameVerSubPaths, const char *descStr)
@@ -148,10 +157,94 @@ static void BEL_Cross_CheckForKDreamsInstallations(UNIX_SPECIFIC_PARAM(const cha
 #endif // REFKEEN_HAS_VER_KDREAMS
 }
 
+//static void BEL_Cross_CheckForCatacombsInstallations(UNIX_SPECIFIC_PARAM(const char *homeVar))
+//{
+//#if (defined REFKEEN_HAS_VER_CATACOMB_ALL) && (defined BE_CHECK_GOG_INSTALLATIONS)
+//#if (defined REFKEEN_PLATFORM_WINDOWS) || (defined REFKEEN_PLATFORM_MACOS)
+//
+//	const BE_GameVerDetails_T *catacombVers[] = {
+//#ifdef REFKEEN_HAS_VER_CAT3D
+//		&g_be_gamever_cat3d122,
+//#endif
+//#ifdef REFKEEN_HAS_VER_CATABYSS
+//		&g_be_gamever_catabyss124,
+//#endif
+//#ifdef REFKEEN_HAS_VER_CATARM
+//		&g_be_gamever_catarm102,
+//#endif
+//#ifdef REFKEEN_HAS_VER_CATAPOC
+//		&g_be_gamever_catapoc101,
+//#endif
+//		0,
+//	};
+//
+//#ifdef REFKEEN_PLATFORM_WINDOWS
+//	const TCHAR *catacombSubdirs[] = {
+//#ifdef REFKEEN_HAS_VER_CAT3D
+//		_T("\\Cat3D"),
+//#endif
+//#ifdef REFKEEN_HAS_VER_CATABYSS
+//		_T("\\Abyss"),
+//#endif
+//#ifdef REFKEEN_HAS_VER_CATARM
+//		_T("\\Armageddon"),
+//#endif
+//#ifdef REFKEEN_HAS_VER_CATAPOC
+//		_T("\\Apocalypse"),
+//#endif
+//		0,
+//	};
+//
+//	// Old location
+//	BEL_Cross_TryAddRegistryInst(
+//		_T("SOFTWARE\\GOG.COM\\GOGCATACOMBSPACK"), _T("PATH"), _T(""),
+//		catacombVers, catacombSubdirs, "GOG.com");
+//	// New location
+//	BEL_Cross_TryAddRegistryInst(
+//		_T("SOFTWARE\\GOG.COM\\GAMES\\1207659189"), _T("PATH"), _T(""),
+//		catacombVers, catacombSubdirs, "GOG.com");
+//#endif
+//
+//#ifdef REFKEEN_PLATFORM_MACOS
+//	const TCHAR *catacombSubdirs[] = {
+//#ifdef REFKEEN_HAS_VER_CAT3D
+//		_T("/2CAT3D"),
+//#endif
+//#ifdef REFKEEN_HAS_VER_CATABYSS
+//		_T("/3CABYSS"),
+//#endif
+//#ifdef REFKEEN_HAS_VER_CATARM
+//		_T("/4CATARM"),
+//#endif
+//#ifdef REFKEEN_HAS_VER_CATAPOC
+//		_T("/5APOC"),
+//#endif
+//	};
+//
+//	TCHAR catacombsMacPath[BE_CROSS_PATH_LEN_BOUND];
+//	static const TCHAR *catacombsMacInst = _T("/Applications/Catacombs Pack/Catacomb Pack.app/Contents/Resources/Catacomb Pack.boxer/C 1 CATACOMB.harddisk");
+//	BEL_Cross_safeandfastctstringcopy(
+//		catacombsMacPath,
+//		catacombsMacPath+BE_Cross_ArrayLen(catacombsMacPath),
+//		catacombsMacInst);
+//	BEL_Cross_TryAddInst_Common(&catacombsMacPath, catacombVers, catacombSubdirs, "GOG.com");
+//	if (homeVar && *homeVar)
+//	{
+//		BEL_Cross_safeandfastctstringcopy_2strs(
+//			catacombsMacPath,
+//			catacombsMacPath+BE_Cross_ArrayLen(catacombsMacPath),
+//			homeVar, catacombsMacInst);
+//		BEL_Cross_TryAddInst_Common(&catacombsMacPath, catacombVers, catacombSubdirs, "GOG.com");
+//	}
+//#endif
+//
+//#endif // (defined REFKEEN_PLATFORM_WINDOWS) || (defined REFKEEN_PLATFORM_MACOS)
+//#endif // (defined REFKEEN_HAS_VER_CATACOMB_ALL) && (defined BE_CHECK_GOG_INSTALLATIONS)
+//}
+
 static void BEL_Cross_CheckForCatacombsInstallations(UNIX_SPECIFIC_PARAM(const char *homeVar))
 {
-#if (defined REFKEEN_HAS_VER_CATACOMB_ALL) && (defined BE_CHECK_GOG_INSTALLATIONS)
-#if (defined REFKEEN_PLATFORM_WINDOWS) || (defined REFKEEN_PLATFORM_MACOS)
+#if (defined REFKEEN_PLATFORM_UNIX)
 
 	const BE_GameVerDetails_T *catacombVers[] = {
 #ifdef REFKEEN_HAS_VER_CAT3D
@@ -169,68 +262,32 @@ static void BEL_Cross_CheckForCatacombsInstallations(UNIX_SPECIFIC_PARAM(const c
 		0,
 	};
 
-#ifdef REFKEEN_PLATFORM_WINDOWS
+
 	const TCHAR *catacombSubdirs[] = {
 #ifdef REFKEEN_HAS_VER_CAT3D
-		_T("\\Cat3D"),
+		("/Cat3D"),
 #endif
 #ifdef REFKEEN_HAS_VER_CATABYSS
-		_T("\\Abyss"),
+		("/Abyss"),
 #endif
 #ifdef REFKEEN_HAS_VER_CATARM
-		_T("\\Armageddon"),
+		("/Armageddon"),
 #endif
 #ifdef REFKEEN_HAS_VER_CATAPOC
-		_T("\\Apocalypse"),
-#endif
-		0,
-	};
-
-	// Old location
-	BEL_Cross_TryAddRegistryInst(
-		_T("SOFTWARE\\GOG.COM\\GOGCATACOMBSPACK"), _T("PATH"), _T(""),
-		catacombVers, catacombSubdirs, "GOG.com");
-	// New location
-	BEL_Cross_TryAddRegistryInst(
-		_T("SOFTWARE\\GOG.COM\\GAMES\\1207659189"), _T("PATH"), _T(""),
-		catacombVers, catacombSubdirs, "GOG.com");
-#endif
-
-#ifdef REFKEEN_PLATFORM_MACOS
-	const TCHAR *catacombSubdirs[] = {
-#ifdef REFKEEN_HAS_VER_CAT3D
-		_T("/2CAT3D"),
-#endif
-#ifdef REFKEEN_HAS_VER_CATABYSS
-		_T("/3CABYSS"),
-#endif
-#ifdef REFKEEN_HAS_VER_CATARM
-		_T("/4CATARM"),
-#endif
-#ifdef REFKEEN_HAS_VER_CATAPOC
-		_T("/5APOC"),
+		("/Apocalypse"),
 #endif
 	};
 
-	TCHAR catacombsMacPath[BE_CROSS_PATH_LEN_BOUND];
-	static const TCHAR *catacombsMacInst = _T("/Applications/Catacombs Pack/Catacomb Pack.app/Contents/Resources/Catacomb Pack.boxer/C 1 CATACOMB.harddisk");
+	TCHAR catacombsPath[BE_CROSS_PATH_LEN_BOUND];
+static const TCHAR *catacombsLocalInst = (".");
 	BEL_Cross_safeandfastctstringcopy(
-		catacombsMacPath,
-		catacombsMacPath+BE_Cross_ArrayLen(catacombsMacPath),
-		catacombsMacInst);
-	BEL_Cross_TryAddInst_Common(&catacombsMacPath, catacombVers, catacombSubdirs, "GOG.com");
-	if (homeVar && *homeVar)
-	{
-		BEL_Cross_safeandfastctstringcopy_2strs(
-			catacombsMacPath,
-			catacombsMacPath+BE_Cross_ArrayLen(catacombsMacPath),
-			homeVar, catacombsMacInst);
-		BEL_Cross_TryAddInst_Common(&catacombsMacPath, catacombVers, catacombSubdirs, "GOG.com");
-	}
-#endif
+	    catacombsPath,
+	    catacombsPath + BE_Cross_ArrayLen(catacombsPath),
+	    catacombsLocalInst);
+	BEL_Cross_TryAddInst_Common(&catacombsPath, catacombVers, catacombSubdirs, "GOG.com");
+	
 
-#endif // (defined REFKEEN_PLATFORM_WINDOWS) || (defined REFKEEN_PLATFORM_MACOS)
-#endif // (defined REFKEEN_HAS_VER_CATACOMB_ALL) && (defined BE_CHECK_GOG_INSTALLATIONS)
+#endif // (defined REFKEEN_PLATFORM_UNIX)
 }
 
 static void BEL_Cross_CheckForWolf3DInstallations(UNIX_SPECIFIC_PARAM(const char *homeVar))
