@@ -26,6 +26,9 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <unistd.h>
+#include <limits.h>
+
 #include "be_cross.h"
 #include "be_filesystem_app_paths.h"
 #include "be_filesystem_string_ops.h"
@@ -244,6 +247,9 @@ void BE_Cross_PrepareAppPaths(void)
 	/*** Root paths ***/
 
 	char path[BE_CROSS_PATH_LEN_BOUND];
+
+	// Use current directory first as a root path for game files
+	BEL_Cross_AddRootPathIfDir(".", "current_dir", "Current directory");
 
 	if (homeVar && *homeVar) // Should be set, otherwise there's a big problem (but warning is printed)
 	{
