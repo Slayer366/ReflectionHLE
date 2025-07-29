@@ -230,7 +230,7 @@ static BE_ST_CFG_Setting_T g_be_st_kdreams_settings[] = {
 	DEF_STR(kdreams.launcherModPath, "launchermod")
 #endif
 	DEF_BOOL(kdreams.absMouseMotion, "absmousemotion", false)
-	DEF_BOOL(kdreams.useLeftStick, "lstick", true)
+	DEF_BOOL(kdreams.useLeftStick, "lstick", false)
 	DEF_BOOL(kdreams.useRightStick, "rstick", false)
 	DEF_CTRL_BINDS_KDREAMS_ENUMS(UP, "up", BE_ST_CTRL_BUT_DPAD_UP)
 	DEF_CTRL_BINDS_KDREAMS_ENUMS(DOWN, "down", BE_ST_CTRL_BUT_DPAD_DOWN)
@@ -244,7 +244,7 @@ static BE_ST_CFG_Setting_T g_be_st_kdreams_settings[] = {
 };
 
 static BE_ST_CFG_Setting_T g_be_st_kdreams_legacy_settings[] = {
-	DEF_BOOL(kdreams.useLeftStick, "altcontrolscheme_lstick", true)
+	DEF_BOOL(kdreams.useLeftStick, "altcontrolscheme_lstick", false)
 	DEF_BOOL(kdreams.useRightStick, "altcontrolscheme_rstick", false)
 	DEF_CTRL_LEGACY_BINDS_KDREAMS_ENUMS(UP, "up", BE_ST_CTRL_BUT_DPAD_UP)
 	DEF_CTRL_LEGACY_BINDS_KDREAMS_ENUMS(DOWN, "down", BE_ST_CTRL_BUT_DPAD_DOWN)
@@ -264,7 +264,7 @@ static BE_ST_CFG_Setting_T g_be_st_cat3d_settings[] = {
 	DEF_STR(cat3d.launcherExeArgs, "launcherexeargs")
 	DEF_STR(cat3d.launcherModPath, "launchermod")
 #endif
-	DEF_BOOL(cat3d.useLeftStick, "lstick", true)
+	DEF_BOOL(cat3d.useLeftStick, "lstick", false)
 	DEF_BOOL(cat3d.useRightStick, "rstick", false)
 	DEF_BOOL(cat3d.analogMotion, "analogmotion", false)
 	DEF_BOOL(cat3d.novert, "novert", false)
@@ -289,7 +289,7 @@ static BE_ST_CFG_Setting_T g_be_st_cat3d_settings[] = {
 };
 
 static BE_ST_CFG_Setting_T g_be_st_cat3d_legacy_settings[] = {
-	DEF_BOOL(cat3d.useLeftStick, "altcontrolscheme_lstick", true)
+	DEF_BOOL(cat3d.useLeftStick, "altcontrolscheme_lstick", false)
 	DEF_BOOL(cat3d.useRightStick, "altcontrolscheme_rstick", false)
 	DEF_BOOL(cat3d.analogMotion, "altcontrolscheme_analogmotion", false)
 	DEF_BOOL(cat3d.novert, "novert", false) // Used to be in reflection-catacomb.cfg
@@ -347,7 +347,7 @@ static BE_ST_CFG_Setting_T g_be_st_wolf3d_settings[] = {
 };
 
 static BE_ST_CFG_Setting_T g_be_st_wolf3d_legacy_settings[] = {
-	DEF_BOOL(wolf3d.useLeftStick, "altcontrolscheme_lstick", true)
+	DEF_BOOL(wolf3d.useLeftStick, "altcontrolscheme_lstick", false)
 	DEF_BOOL(wolf3d.useRightStick, "altcontrolscheme_rstick", false)
 	DEF_BOOL(wolf3d.analogMotion, "altcontrolscheme_analogmotion", false)
 	// FIXME: HACK (extra 2 are for triggers)

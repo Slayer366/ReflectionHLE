@@ -212,19 +212,19 @@ void BE_ST_PollEvents(void)
 			break;
 #endif // REFKEEN_CONFIG_ENABLE_TOUCHINPUT
 
-		case SDL_JOYAXISMOTION:
-			for (int i = 0; i < BE_ST_MAXJOYSTICKS; ++i)
-			{
-				if (g_sdlJoysticks[i] && (g_sdlJoysticksInstanceIds[i] == event.jaxis.which))
-				{
-					if (event.jaxis.value >= 0)
-						g_sdlEmuJoyMotionState[(event.jaxis.axis + 2*i) % 4] = event.jaxis.value*(BE_ST_EMU_JOYSTICK_RANGEMAX-BE_ST_EMU_JOYSTICK_RANGECENTER)/32767 + BE_ST_EMU_JOYSTICK_RANGECENTER;
-					else
-						g_sdlEmuJoyMotionState[(event.jaxis.axis + 2*i) % 4] = (event.jaxis.value+32768)*(BE_ST_EMU_JOYSTICK_RANGECENTER-BE_ST_EMU_JOYSTICK_RANGEMIN)/32768 + BE_ST_EMU_JOYSTICK_RANGEMIN;
-					break;
-				}
-			}
-			break;
+//		case SDL_JOYAXISMOTION:
+//			for (int i = 0; i < BE_ST_MAXJOYSTICKS; ++i)
+//			{
+//				if (g_sdlJoysticks[i] && (g_sdlJoysticksInstanceIds[i] == event.jaxis.which))
+//				{
+//					if (event.jaxis.value >= 0)
+//						g_sdlEmuJoyMotionState[(event.jaxis.axis + 2*i) % 4] = event.jaxis.value*(BE_ST_EMU_JOYSTICK_RANGEMAX-BE_ST_EMU_JOYSTICK_RANGECENTER)/32767 + BE_ST_EMU_JOYSTICK_RANGECENTER;
+//					else
+//						g_sdlEmuJoyMotionState[(event.jaxis.axis + 2*i) % 4] = (event.jaxis.value+32768)*(BE_ST_EMU_JOYSTICK_RANGECENTER-BE_ST_EMU_JOYSTICK_RANGEMIN)/32768 + BE_ST_EMU_JOYSTICK_RANGEMIN;
+//					break;
+//				}
+//			}
+//			break;
 		case SDL_JOYBUTTONDOWN:
 			BEL_ST_CheckForHidingTouchUI();
 			// Fall-through
@@ -295,37 +295,37 @@ void BE_ST_PollEvents(void)
 			}
 			break;
 
-		case SDL_CONTROLLERAXISMOTION:
-		{
-			// Do nothing if some on-screen keyboard is in use
-			if ((g_sdlControllerMappingActualCurr == &g_beStControllerMappingTextInput) || (g_sdlControllerMappingActualCurr == &g_beStControllerMappingDebugKeys))
-				break;
-
-			int axis = event.caxis.axis;
-			int axisVal = event.caxis.value;
-			int side = (axisVal < 0) ? 0 : 1;
-			if ((axis < 0) || (axis >= BE_ST_CTRL_AXIS_MAX))
-				break;
-			/* Note: We handle BOTH sides, in case axisVal == 0,
-			 * or alternatively, the sign of axisVal changes, so
-			 * "release/clear" events can be properly sent.
-			 * Ensure the release always precedes the press, though. */
-			BEL_ST_AltControlScheme_HandleEntry(
-				&g_sdlControllerMappingActualCurr->paxes[axis][1 - side],
-				0,
-				&g_sdlInputbindStates.paxes[axis][1 - side]);
-			if (!BEL_ST_AltControlScheme_HandleEntry(
-				&g_sdlControllerMappingActualCurr->paxes[axis][side],
-				abs(axisVal),
-				&g_sdlInputbindStates.paxes[axis][side]))
-				{
-					// Special case for triggers, treated like digital buttons
-					if ((axis == BE_ST_CTRL_AXIS_LTRIGGER) || (axis == BE_ST_CTRL_AXIS_RTRIGGER))
-						BEL_ST_AltControlScheme_HandleEntry(&g_sdlControllerMappingActualCurr->defaultMapping, axisVal, &g_sdlDefaultMappingBinaryState);
-				}
-
-			break;
-		}
+//		case SDL_CONTROLLERAXISMOTION:
+//		{
+//			// Do nothing if some on-screen keyboard is in use
+//			if ((g_sdlControllerMappingActualCurr == &g_beStControllerMappingTextInput) || (g_sdlControllerMappingActualCurr == &g_beStControllerMappingDebugKeys))
+//				break;
+//
+//			int axis = event.caxis.axis;
+//			int axisVal = event.caxis.value;
+//			int side = (axisVal < 0) ? 0 : 1;
+//			if ((axis < 0) || (axis >= BE_ST_CTRL_AXIS_MAX))
+//				break;
+//			/* Note: We handle BOTH sides, in case axisVal == 0,
+//			 * or alternatively, the sign of axisVal changes, so
+//			 * "release/clear" events can be properly sent.
+//			 * Ensure the release always precedes the press, though. */
+//			BEL_ST_AltControlScheme_HandleEntry(
+//				&g_sdlControllerMappingActualCurr->paxes[axis][1 - side],
+//				0,
+//				&g_sdlInputbindStates.paxes[axis][1 - side]);
+//			if (!BEL_ST_AltControlScheme_HandleEntry(
+//				&g_sdlControllerMappingActualCurr->paxes[axis][side],
+//				abs(axisVal),
+//				&g_sdlInputbindStates.paxes[axis][side]))
+//				{
+//					// Special case for triggers, treated like digital buttons
+//					if ((axis == BE_ST_CTRL_AXIS_LTRIGGER) || (axis == BE_ST_CTRL_AXIS_RTRIGGER))
+//						BEL_ST_AltControlScheme_HandleEntry(&g_sdlControllerMappingActualCurr->defaultMapping, axisVal, &g_sdlDefaultMappingBinaryState);
+//				}
+//
+//			break;
+//		}
 
 		case SDL_CONTROLLERBUTTONDOWN:
 			BEL_ST_CheckForHidingTouchUI();
