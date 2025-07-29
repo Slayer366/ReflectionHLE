@@ -36,6 +36,8 @@
 #define S_DN		"DOWN"
 #define S_DNLEFT	"DOWN & LEFT"
 #define S_LEFT		"LEFT"
+#define S_STRAFELEFT 	"STRAFE LEFT"
+#define S_STRAFERIGHT 	"STRAFE RIGHT"
 
 #define S_JUMP		"JUMP"
 #define S_POGO		"POGO"

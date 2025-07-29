@@ -477,6 +477,7 @@ extern id0_unsigned_t *skycolor,*groundcolor;
 
 extern	ControlInfo	control;
 extern	id0_boolean_t		running,slowturn;
+extern 	id0_boolean_t 		StrafeLeft,StrafeRight;
 
 extern	id0_int_t			bordertime;
 

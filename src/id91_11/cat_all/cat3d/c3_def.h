@@ -290,6 +290,7 @@ void LatchDrawPic (id0_unsigned_t x, id0_unsigned_t y, id0_unsigned_t picnum);
 
 extern	ControlInfo	c;
 extern	id0_boolean_t		running,slowturn;
+extern 	id0_boolean_t 		StrafeLeft,StrafeRight;
 
 extern	id0_int_t			bordertime;
 

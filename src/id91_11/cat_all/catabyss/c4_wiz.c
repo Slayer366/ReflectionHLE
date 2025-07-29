@@ -2637,6 +2637,21 @@ void ControlMovement (objtype *ob)
 	id0_int_t	angle;
 	id0_long_t	speed;
 
+	// Dedicated strafe keys
+	if (control.StrafeLeft)
+	{
+	  id0_int_t angle = ob->angle + ANGLES / 4;
+	  if (angle >= ANGLES)
+	    angle -= ANGLES;
+	  Thrust(angle, PLAYERSPEED * tics);
+	}
+	if (control.StrafeRight)
+	{
+	  id0_int_t angle = ob->angle - ANGLES / 4;
+	  if (angle < 0)
+	    angle += ANGLES;
+	  Thrust(angle, PLAYERSPEED * tics);
+	}
 
 	if (control.button1)
 	{

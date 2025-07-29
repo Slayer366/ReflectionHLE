@@ -798,6 +798,11 @@ register	KeyboardDef	*def;
 			else if (Keyboard[def->right] && !g_keybind_used_right)
 				mx = motion_Right;
 
+			if (Keyboard[def->StrafeLeft])
+				dx = -127;
+			else if (Keyboard[def->StrafeRight])
+				dx = 127;
+
 			if (Keyboard[def->button0] && !g_keybind_used_button[0])
 				buttons += 1 << 0;
 			if (Keyboard[def->button1] && !g_keybind_used_button[1])
@@ -833,6 +838,11 @@ register	KeyboardDef	*def;
 				mx = motion_Left;
 			else if (Keyboard[def->right] && !g_keybind_used_right)
 				mx = motion_Right;
+
+			if (Keyboard[def->StrafeLeft])
+				dx = -127;
+			else if (Keyboard[def->StrafeRight])
+				dx = 127;
 
 			if (Keyboard[def->button0] && !g_keybind_used_button[0])
 				buttons += 1 << 0;
@@ -909,6 +919,8 @@ register	KeyboardDef	*def;
 	info->button0 = buttons & (1 << 0);
 	info->button1 = buttons & (1 << 1);
 	info->dir = DirTable[((my + 1) * 3) + (mx + 1)];
+	info->StrafeLeft = IN_KeyDown(sc_Comma);
+	info->StrafeRight = IN_KeyDown(sc_Period);
 
 #ifndef REFKEEN_VER_CATADVENTURES
 	if (DemoMode == demo_Record)

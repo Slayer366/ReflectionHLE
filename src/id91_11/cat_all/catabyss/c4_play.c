@@ -72,6 +72,7 @@ id0_unsigned_t gnd_colors[NUMLEVELS]={0x0202,0x0202,0x0606,0x0202,0x0707,
 
 ControlInfo	control;
 id0_boolean_t		running=false; //,slowturn;
+id0_boolean_t 		StrafeLeft,StrafeRight;
 
 id0_int_t			bordertime;
 // (REFKEEN) new has been renamed newobj since new is a reserved C++ keyword

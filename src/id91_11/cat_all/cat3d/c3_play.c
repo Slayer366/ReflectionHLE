@@ -46,6 +46,7 @@ REFKEEN_NS_B
 ControlInfo	c;
 // REFKEEN: Omit set-but-unused slowturn var, as done in the later games
 id0_boolean_t		running; //,slowturn;
+id0_boolean_t 		StrafeLeft,StrafeRight;
 
 id0_int_t			bordertime;
 // (REFKEEN) new has been renamed newobj since new is a reserved C++ keyword

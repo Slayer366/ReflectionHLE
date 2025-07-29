@@ -146,7 +146,9 @@ static  ScanCode        *KeyMaps[] =
 						&KbdDefs[0].downright,
 						&KbdDefs[0].down,
 						&KbdDefs[0].downleft,
-						&KbdDefs[0].left
+						&KbdDefs[0].left,
+						&KbdDefs[0].StrafeLeft,
+						&KbdDefs[0].StrafeRight
 					};
 
 // Custom routine prototypes
@@ -246,6 +248,8 @@ static  id0_boolean_t USL_ConfigCustom(UserCall call,struct UserItem id0_far *it
 		{DefButton(sc_None,"DOWN")},
 		{DefButton(sc_None,"DOWN & LEFT")},
 		{DefButton(sc_None,"LEFT")},
+//		{DefButton(sc_None,"STRAFE LEFT")},
+//		{DefButton(sc_None,"STRAFE RIGHT")},
 		{uii_Bad}
 	};
 	UserItemGroup   id0_far keygroup = {0,0,CP_KEYMOVEMENTPIC,sc_None,keyi,USL_KeyCustom};

@@ -77,6 +77,8 @@ typedef	id0_byte_t		ScanCode;
 #define	sc_F10			0x44
 #define	sc_F11			0x57
 #define	sc_F12			0x59
+#define sc_Comma        0x33
+#define sc_Period       0x34
 
 #define	sc_A			0x1e
 #define	sc_B			0x30
@@ -152,6 +154,7 @@ typedef	struct		{
 						id0_int_t			x,y;
 						Motion		xaxis,yaxis;
 						Direction	dir;
+						id0_boolean_t	StrafeLeft, StrafeRight;
 					} CursorInfo;
 typedef	CursorInfo	ControlInfo;
 
@@ -161,7 +164,8 @@ typedef	struct		{
 						ScanCode	button0,button1,
 									upleft,		up,		upright,
 									left,				right,
-									downleft,	down,	downright;
+									downleft,	down,	downright,
+								 	StrafeLeft,         StrafeRight;
 					} KeyboardDef;
 typedef	struct		{
 						id0_word_t		joyMinX,joyMinY,
