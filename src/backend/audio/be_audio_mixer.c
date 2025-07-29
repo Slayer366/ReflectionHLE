@@ -171,7 +171,7 @@ BE_ST_AudioMixerSource *BEL_ST_AudioMixerAddSource(
 	}
 
 	src->userVol = (userVolAsInt == BE_AUDIO_VOL_MIN) ?
-	               0.0 : exp((userVolAsInt - BE_AUDIO_VOL_MAX)/4.0);
+	               0.0 : 4.0 * exp((userVolAsInt - BE_AUDIO_VOL_MAX)/4.0);
 
 	src->mutex = BE_ST_CreateMutex();
 	assert(src->mutex);
