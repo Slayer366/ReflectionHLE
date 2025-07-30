@@ -2799,10 +2799,10 @@ void BE_ST_Launcher_RunEventLoop(void)
 					}
 				break;
 
-//			case SDL_CONTROLLERAXISMOTION: // Need this so a pressed trigger is ignored once user gets to choose a button for in-game action
-//				if ((event.caxis.axis == BE_ST_CTRL_AXIS_LTRIGGER) || (event.caxis.axis == BE_ST_CTRL_AXIS_RTRIGGER))
-//					g_sdlLauncherTriggerBinaryStates[event.caxis.axis - BE_ST_CTRL_AXIS_LTRIGGER] = (event.caxis.value >= g_sdlJoystickAxisBinaryThreshold);
-//				break;
+			case SDL_CONTROLLERAXISMOTION: // Need this so a pressed trigger is ignored once user gets to choose a button for in-game action
+				if ((event.caxis.axis == BE_ST_CTRL_AXIS_LTRIGGER) || (event.caxis.axis == BE_ST_CTRL_AXIS_RTRIGGER))
+					g_sdlLauncherTriggerBinaryStates[event.caxis.axis - BE_ST_CTRL_AXIS_LTRIGGER] = (event.caxis.value >= g_sdlJoystickAxisBinaryThreshold);
+				break;
 			case SDL_CONTROLLERBUTTONDOWN:
 				if ((event.cbutton.button < 0) || (event.cbutton.button >= BE_ST_CTRL_BUT_MAX))
 					break;
@@ -2939,19 +2939,19 @@ void BE_ST_Launcher_WaitForUserBind(BEMenuItem *menuItem, BEMenuBind menuBind)
 					}
 				break;
 
-//			case SDL_CONTROLLERAXISMOTION:
-//				if ((event.caxis.axis == BE_ST_CTRL_AXIS_LTRIGGER) || (event.caxis.axis == BE_ST_CTRL_AXIS_RTRIGGER))
-//				{
-//					int triggerNum = event.caxis.axis - BE_ST_CTRL_AXIS_LTRIGGER;
-//					bool prevBinaryState = g_sdlLauncherTriggerBinaryStates[triggerNum];
-//					g_sdlLauncherTriggerBinaryStates[triggerNum] = (event.caxis.value >= g_sdlJoystickAxisBinaryThreshold);
-//					if (!prevBinaryState && g_sdlLauncherTriggerBinaryStates[triggerNum])
-//					{
-//						choice = BE_ST_CTRL_BUT_MAX + triggerNum; // HACK
-//						keepRunning = false;
-//					}
-//				}
-//				break;
+			case SDL_CONTROLLERAXISMOTION:
+				if ((event.caxis.axis == BE_ST_CTRL_AXIS_LTRIGGER) || (event.caxis.axis == BE_ST_CTRL_AXIS_RTRIGGER))
+				{
+					int triggerNum = event.caxis.axis - BE_ST_CTRL_AXIS_LTRIGGER;
+					bool prevBinaryState = g_sdlLauncherTriggerBinaryStates[triggerNum];
+					g_sdlLauncherTriggerBinaryStates[triggerNum] = (event.caxis.value >= g_sdlJoystickAxisBinaryThreshold);
+					if (!prevBinaryState && g_sdlLauncherTriggerBinaryStates[triggerNum])
+					{
+						choice = BE_ST_CTRL_BUT_MAX + triggerNum; // HACK
+						keepRunning = false;
+					}
+				}
+				break;
 			case SDL_CONTROLLERBUTTONDOWN:
 				if ((menuBind == BE_MENUBIND_PAD) &&
 				    BE_ST_IsValidPadButton(event.cbutton.button))
@@ -3242,10 +3242,10 @@ bool BEL_ST_SDL_Launcher_DoEditArguments(void)
 					}
 				break;
 
-//			case SDL_CONTROLLERAXISMOTION: // Need this so a pressed trigger is ignored once user gets to choose a button for in-game action
-//				if ((event.caxis.axis == BE_ST_CTRL_AXIS_LTRIGGER) || (event.caxis.axis == BE_ST_CTRL_AXIS_RTRIGGER))
-//					g_sdlLauncherTriggerBinaryStates[event.caxis.axis - BE_ST_CTRL_AXIS_LTRIGGER] = (event.caxis.value >= g_sdlJoystickAxisBinaryThreshold);
-//				break;
+			case SDL_CONTROLLERAXISMOTION: // Need this so a pressed trigger is ignored once user gets to choose a button for in-game action
+				if ((event.caxis.axis == BE_ST_CTRL_AXIS_LTRIGGER) || (event.caxis.axis == BE_ST_CTRL_AXIS_RTRIGGER))
+					g_sdlLauncherTriggerBinaryStates[event.caxis.axis - BE_ST_CTRL_AXIS_LTRIGGER] = (event.caxis.value >= g_sdlJoystickAxisBinaryThreshold);
+				break;
 			case SDL_CONTROLLERBUTTONDOWN:
 				if ((event.cbutton.button < 0) || (event.cbutton.button >= BE_ST_CTRL_BUT_MAX))
 					break;
